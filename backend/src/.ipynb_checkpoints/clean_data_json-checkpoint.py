@@ -37,9 +37,14 @@ def clean_data_json(df):
     # Apply StandardScaler to numerical columns
     df[numerical_cols] = scaler.transform(df[numerical_cols])
 
-    # Apply LabelEncoder to categorical columns
-    for col, le in label_encoders.items():
-        df[col] = le.transform(df[col])
+    # Handle categorical columns
+    for col in categorical_cols:
+        if col in df.columns:
+            # Apply LabelEncoder if the column exists
+            df[col] = label_encoders[col].transform(df[col])
+        else:
+            # Add missing categorical columns with default value
+            df[col] = label_encoders[col].transform([label_encoders[col].classes_[0]])[0]
 
     # Ensure all training columns are present
     df = fix_missing_cols(training_cols, df)
