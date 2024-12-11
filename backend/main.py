@@ -13,9 +13,10 @@ import mlflow
 from src.clean_data_csv import clean_data
 from src.clean_data_json import clean_data_json
 from examplejson.churn_info import ChurnPredictionModel
-
+import json
 import os
 import mlflow.pyfunc
+import pickle
 
 DagsHub_username = os.getenv("DagsHub_username")
 DagsHub_token=os.getenv("DagsHub_token")
@@ -67,14 +68,23 @@ def return_predictions(file: UploadFile = File(...)):
 
 # this endpoint receives data in the form of json (informations about one transaction)
 @app.post("/predict")
-def predict(data : ChurnPredictionModel):
+def predict(data: ChurnPredictionModel):
+    # Convert received data into a DataFrame
     received = data.dict()
-    df =  pd.DataFrame(received,index=[0])
+    df = pd.DataFrame([received])  # Wrap `received` in a list to create a single-row DataFrame
+    # Apply your JSON cleaning function if necessary
     preprocessed_data = clean_data_json(df)
+
+    # Debugging: Check the preprocessed data
     print(preprocessed_data)
+
+    # Predict using the model
     predictions = model.predict(preprocessed_data)
+
+    # Return predictions as JSON
     return {"predictions": predictions.tolist()}
 
 
+
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8081)
+    uvicorn.run("main:app", host="0.0.0.0", port=8080)

@@ -4,10 +4,10 @@ import numpy as np
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 
 # Load the saved label encoders and scaler
-with open("src/label_encoders.ppkl", "rb") as le_file:
+with open("src/label_encodersFinal.pkl", "rb") as le_file:
     label_encoders = pickle.load(le_file)
 
-with open("src/scaler.ppkl", "rb") as dc_file:
+with open("src/scalerFinal.pkl", "rb") as dc_file:
     scaler = pickle.load(dc_file)
 
 training_cols = [
@@ -16,52 +16,41 @@ training_cols = [
     'Last Interaction', 'Churn'
 ]
 
-def fix_missing_cols(training_cols, new_data):
-    missing_cols = set(training_cols) - set(new_data.columns)
-    for c in missing_cols:
-        new_data[c] = 0  # Add missing columns with default value 0
-    new_data = new_data[training_cols]  # Ensure column order matches training
-    return new_data
 
 # Clean and preprocess the data
 def clean_data(df):
-    # Ensure that all necessary columns are present
-    df = df[['Gender', 'Subscription Type', 'Contract Length', 'Age', 'Tenure', 
-             'Usage Frequency', 'Support Calls', 'Payment Delay', 'Total Spend', 'Last Interaction']]
+  # Column renaming to match expected training columns
+    df = df.rename(columns={
+        "Contract_Length": "Contract Length",
+        "Last_Interaction": "Last Interaction",
+        "Subscription_Type": "Subscription Type",
+        "Usage_Frequency": "Usage Frequency",
+        "Payment_Delay": "Payment Delay",
+        "Support_Calls": "Support Calls",
+        "Total_Spend": "Total Spend"    })
 
-    # Separate numerical and categorical columns
-    numerical_cols = ['Age', 'Tenure', 'Usage Frequency', 'Support Calls', 
-                      'Payment Delay', 'Total Spend', 'Last Interaction']
-    categorical_cols = ['Gender', 'Subscription Type', 'Contract Length']
-    
-    # Check that all numerical columns are present in the DataFrame
-    missing_numerical_cols = [col for col in numerical_cols if col not in df.columns]
-    if missing_numerical_cols:
-        raise ValueError(f"Missing numerical columns: {missing_numerical_cols}")
+    # Define column types
+    numerical_cols = [
+        'Age', 'Tenure', 'Usage Frequency', 'Support Calls', 
+        'Payment Delay', 'Total Spend', 'Last Interaction'
+    ]
+    categorical_cols = ["Gender", 'Subscription Type', "Contract Length"]
 
-    # Apply StandardScaler to numerical columns (transform all columns at once)
+
+    # Apply StandardScaler to numerical columns
     df[numerical_cols] = scaler.transform(df[numerical_cols])
 
-    # Apply LabelEncoder to categorical columns
+    
+
+    # Encode categorical columns
     for col in categorical_cols:
         if col in df.columns:
             if col in label_encoders:
                 le = label_encoders[col]
-                df[col] = le.transform(df[col])  # Apply label encoding
+                df[col] = le.transform(df[col])
             else:
                 raise ValueError(f"No LabelEncoder found for column: {col}")
-
-    # Fix any missing columns in the DataFrame
-    df = fix_missing_cols(training_cols, df)
+        else:
+            raise ValueError(f"Missing categorical column: {col}")
 
     return df
-
-# Example: Load data from CSV and preprocess
-def preprocess_csv(input_file):
-    # Load the CSV file
-    df = pd.read_csv(input_file)
-
-    # Process the data
-    cleaned_data = clean_data(df)
-
-    return cleaned_data
