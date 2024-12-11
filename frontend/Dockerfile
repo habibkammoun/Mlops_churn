@@ -11,7 +11,7 @@ COPY . .
 
 EXPOSE 8501
 
-# CMD ["streamlit", "run", "main.py"]
+# CMD ["streamlit", "run", "front_end.py"]
 
 CMD streamlit run --server.port $PORT front_end.py 
 
