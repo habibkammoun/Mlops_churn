@@ -9,7 +9,7 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-EXPOSE 8501
+# EXPOSE 8501
 
 # CMD ["streamlit", "run", "front_end.py"]
 
