@@ -120,31 +120,31 @@ elif selected_page == "Predict with Form":
         # Input fields
         col1, col2 = st.columns(2)
         with col1:
-            age = st.number_input("Age", min_value=18, max_value=100, value=35)
-            gender = st.selectbox("Gender", ["Male", "Female"])
-            tenure = st.number_input("Tenure (months)", min_value=0, max_value=120, value=12)
-            usage_frequency = st.number_input("Usage Frequency", min_value=0, value=10)
-            support_calls = st.number_input("Support Calls", min_value=0, value=2)
+            age = st.number_input("Age", min_value=18, max_value=100, value=22, step=1)
+            gender = st.selectbox("Gender", ["Female", "Male"])
+            tenure = st.number_input("Tenure (months)", min_value=0, max_value=120, value=25, step=1)
+            usage_frequency = st.number_input("Usage Frequency", min_value=0, value=14, step=1)
+            support_calls = st.number_input("Support Calls", min_value=0, value=4, step=1)
 
         with col2:
-            payment_delay = st.number_input("Payment Delay (days)", min_value=0, value=0)
+            payment_delay = st.number_input("Payment Delay (days)", min_value=0, value=27, step=1)
             subscription_type = st.selectbox("Subscription Type", ["Basic", "Standard", "Premium"])
-            contract_length = st.selectbox("Contract Length (months)", [1, 6, 12, 24])
-            total_spend = st.number_input("Total Spend (USD)", min_value=0.0, value=500.0)
-            last_interaction = st.number_input("Days Since Last Interaction", min_value=0, value=30)
+            contract_length = st.selectbox("Contract Length", ["Monthly", "Quarterly", "Annual"])
+            total_spend = st.number_input("Total Spend (USD)", min_value=0, value=598, step=1)  # Converted to int
+            last_interaction = st.number_input("Days Since Last Interaction", min_value=0, value=9, step=1)
 
         # Collect data in a dictionary
         input_data = {
-            "Age": age,
+            "Age": int(age),
             "Gender": gender,
-            "Tenure": tenure,
-            "Usage Frequency": usage_frequency,
-            "Support Calls": support_calls,
-            "Payment Delay": payment_delay,
+            "Tenure": int(tenure),
+            "Usage Frequency": int(usage_frequency),
+            "Support Calls": int(support_calls),
+            "Payment Delay": int(payment_delay),
             "Subscription Type": subscription_type,
             "Contract Length": contract_length,
-            "Total Spend": total_spend,
-            "Last Interaction": last_interaction,
+            "Total Spend": int(total_spend),  # Converted to int
+            "Last Interaction": int(last_interaction),
         }
 
         # Submit button
@@ -152,7 +152,7 @@ elif selected_page == "Predict with Form":
 
         if submit:
             try:
-                response = requests.post(f"{backend_url}/predict", data=json.dumps(input_data))
+                response = requests.post(f"{backend_url}/predict", data=json.dumps(input_data), headers={"Content-Type": "application/json"})
                 predictions = response.json().get("predictions")
 
                 # Display the prediction result
@@ -167,6 +167,7 @@ elif selected_page == "Predict with Form":
                 st.error(f"An error occurred: {e}")
 
 # Predict with CSV Page
+# Predict with CSV Page
 elif selected_page == "Predict with CSV":
     st.title("📁 Predict Customer Churn - CSV")
     st.subheader("Upload a CSV file to analyze multiple customer records.")
@@ -175,16 +176,25 @@ elif selected_page == "Predict with CSV":
 
     if uploaded_file is not None:
         try:
-            file = {"file": uploaded_file.getvalue()}
-            response = requests.post(f"{backend_url}/predict/csv", files=file)
-            predictions = response.json().get("predictions")
+            # Send the file to the backend
+            response = requests.post(
+                f"{backend_url}/predict/csv",
+                files={"file": (uploaded_file.name, uploaded_file, "text/csv")},
+            )
+            
+            # Check if the response is valid
+            if response.status_code == 200:
+                predictions = response.json().get("predictions")
 
-            # Display predictions for each record
-            st.subheader("Predictions for uploaded data")
-            for idx, prediction in enumerate(predictions, start=1):
-                st.text(f"Record {idx}: {'⚠️ Likely to churn' if prediction == 1 else '✅ Not likely to churn'}")
+                # Display predictions for each record
+                st.subheader("Predictions for uploaded data")
+                for idx, prediction in enumerate(predictions, start=1):
+                    st.text(f"Record {idx}: {'⚠️ Likely to churn' if prediction == 1 else '✅ Not likely to churn'}")
+            else:
+                st.error(f"Error: {response.text}")
         except Exception as e:
             st.error(f"An error occurred while processing the file: {e}")
+
 
 # Power BI Dashboard Page
 elif selected_page == "Power BI Dashboard":

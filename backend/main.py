@@ -17,6 +17,8 @@ import json
 import os
 import mlflow.pyfunc
 import pickle
+from fastapi import HTTPException
+
 
 DagsHub_username = os.getenv("DagsHub_username")
 DagsHub_token=os.getenv("DagsHub_token")
@@ -57,13 +59,15 @@ model = mlflow.pyfunc.load_model(logged_model)
 def read_root():
     return {"Hello": "to churn  detector app version 2"}
 
-# this endpoint receives data in the form of csv file (histotical transactions data)
+
+
 @app.post("/predict/csv")
 def return_predictions(file: UploadFile = File(...)):
     data = pd.read_csv(file.file)
     preprocessed_data = clean_data(data)
     predictions = model.predict(preprocessed_data)
     return {"predictions": predictions.tolist()}
+
 
 
 # this endpoint receives data in the form of json (informations about one transaction)
