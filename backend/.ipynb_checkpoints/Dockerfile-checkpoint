@@ -11,4 +11,4 @@ EXPOSE 8080
 
 # CMD ["python", "main.py"]
 
-CMD gunicorn -w 3 -k uvicorn.workers.UvicornWorker main:app --bind 0.0.0.0:${PORT:-8080} --timeout 900
+CMD gunicorn -w 4 -k uvicorn.workers.UvicornWorker main:app --bind 0.0.0.0:${PORT:-8080} --timeout 900
