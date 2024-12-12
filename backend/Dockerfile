@@ -11,5 +11,5 @@ EXPOSE 8080
 
 # CMD ["python", "main.py"]
 
-CMD gunicorn -w 3 -k uvicorn.workers.UvicornWorker main:app --bind 0.0.0.0:$PORT --host 0.0.0.0 --timeout 600
+CMD uvicorn main:app --host 0.0.0.0 --port $PORT --timeout-keep-alive 600
 
