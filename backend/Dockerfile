@@ -4,4 +4,4 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 COPY . .
 EXPOSE 8080
-CMD ["gunicorn", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "main:app", "--bind", "0.0.0.0:8080", "--timeout", "900"]
+CMD ["gunicorn", "-w", "1", "-k", "uvicorn.workers.UvicornWorker", "main:app", "--bind", "0.0.0.0:8080", "--timeout", "900"]
