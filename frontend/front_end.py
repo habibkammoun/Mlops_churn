@@ -35,7 +35,7 @@ st.markdown(
     <style>
     /* General background color */
     body {
-        background-color: #e0f7fa; /* Light cyan */
+        background-color: #92a8d1; 
     }
     /* Main content box styling */
     .main {
@@ -206,6 +206,6 @@ elif selected_page == "Power BI Dashboard":
     )
 
     st.markdown(
-        f'<iframe title="Churn Analysis" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiYmM3MDA5NTUtMjg5Mi00ZTM2LWIxODktNzRlMDJiYjU2NzVlIiwidCI6ImRiZDY2NjRkLTRlYjktNDZlYi05OWQ4LTVjNDNiYTE1M2M2MSIsImMiOjl9&pageName=337f1f81144651557047" frameborder="0" allowFullScreen="true"></iframe>',
+        f'<iframe title="Churn Dashbord" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiZDVlZmNlNTgtMmUzNC00YWRkLWIwMjUtNzE1YjYyYTg3MmJhIiwidCI6ImRiZDY2NjRkLTRlYjktNDZlYi05OWQ4LTVjNDNiYTE1M2M2MSIsImMiOjl9" frameborder="0" allowFullScreen="true"></iframe>',
         unsafe_allow_html=True,
     )

@@ -1,5 +1,3 @@
-# frontend/Dockerfile
-
 FROM --platform=linux/amd64 python:3.10
 
 WORKDIR /app
@@ -14,4 +12,3 @@ COPY . .
 # CMD ["streamlit", "run", "front_end.py"]
 
 CMD streamlit run --server.port $PORT front_end.py 
-
