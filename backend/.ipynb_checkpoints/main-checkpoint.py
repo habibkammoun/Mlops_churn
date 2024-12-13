@@ -46,7 +46,7 @@ app.add_middleware(
 #let's call the model from the model registry ( in production stage)
 
 df_mlflow=mlflow.search_runs(filter_string="metrics.F1_score_test < 1")
-run_id = df_mlflow.loc[df_mlflow['metrics.F1_score_test'].idxmax()]['run_id']
+run_id = df_mlflow.loc[df_mlflow['metrics.F1_score_test'].idxmin()]['run_id']
 
 
 
