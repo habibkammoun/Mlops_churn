@@ -18,7 +18,7 @@ import os
 import mlflow.pyfunc
 import pickle
 from fastapi import HTTPException
-
+import xgboost
 
 DagsHub_username = os.getenv("DagsHub_username")
 DagsHub_token=os.getenv("DagsHub_token")
