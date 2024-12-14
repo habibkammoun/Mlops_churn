@@ -12,7 +12,7 @@ os.environ["MLFLOW_TRACKING_PASSWORD"] = "69866747ee87f7d38c71043c4419de31e49131
 mlflow.set_tracking_uri('https://dagshub.com/rami4real/mymlproject.mlflow') #your mlfow tracking uri
 
 #setup mlflow
-mlflow.set_experiment("Churn-experiment")
+mlflow.set_experiment("churn-experiment")
 
 #Data Url and version
 version = "v2.0"
