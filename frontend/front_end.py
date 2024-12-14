@@ -17,7 +17,7 @@ selected_page = option_menu(
     default_index=0,
     orientation="horizontal",
     styles={
-        "container": {"padding": "0!important", "background-color": "#e0f7fa"},
+        "container": {"padding": "0!important"},
         "icon": {"color": "#00796b", "font-size": "20px"}, 
         "nav-link": {
             "font-size": "16px",
@@ -34,12 +34,10 @@ st.markdown(
     """
     <style>
     /* General background color */
-    body {
-        background-color: #92a8d1; 
-    }
+    
     /* Main content box styling */
     .main {
-        background-color: #ffffff; /* White for contrast */
+       /* White for contrast */
         border-radius: 15px;
         padding: 25px;
         box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
