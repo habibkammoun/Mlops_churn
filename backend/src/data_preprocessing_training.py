@@ -1,6 +1,9 @@
 import pandas as pd
 import pickle
 from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.model_selection import train_test_split
+import numpy as np
+
 
 # Load the saved label encoders and scaler
 with open("label_encodersFinal.pkl", "rb") as le_file:
