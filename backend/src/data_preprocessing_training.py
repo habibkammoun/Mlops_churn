@@ -17,6 +17,8 @@ training_cols = [
 
 
 def transform_data(df):
+    df.dropna(inplace=True)
+
     y = df['Churn']
     """
     Cleans and preprocesses the given DataFrame to ensure compatibility with the training process.
