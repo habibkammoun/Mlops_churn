@@ -3,11 +3,10 @@ import pickle
 import numpy as np
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 
-# Load the saved label encoders and scaler
-with open("src/label_encodersFinal.pkl", "rb") as le_file:
+with open("label_encodersFinal.pkl", "rb") as le_file:
     label_encoders = pickle.load(le_file)
 
-with open("src/scalerFinal.pkl", "rb") as dc_file:
+with open("scalerFinal.pkl", "rb") as dc_file:
     scaler = pickle.load(dc_file)
 
 training_cols = [

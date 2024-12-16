@@ -1,5 +1,7 @@
 import pandas as pd
 import pickle
+import numpy as np
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 
 # Load the saved label encoders and scaler
@@ -9,6 +11,7 @@ with open("label_encodersFinal.pkl", "rb") as le_file:
 with open("scalerFinal.pkl", "rb") as dc_file:
     scaler = pickle.load(dc_file)
 
+
 training_cols = [
  'Age', 'Gender', 'Tenure', 'Usage Frequency', 'Support Calls', 
     'Payment Delay', 'Subscription Type', 'Contract Length', 'Total Spend', 
@@ -16,7 +19,10 @@ training_cols = [
 ]
 
 
-def clean_data_json(df):
+def transform_data(df):
+    df.dropna(inplace=True)
+
+    y = df['Churn']
     """
     Cleans and preprocesses the given DataFrame to ensure compatibility with the training process.
 
@@ -61,5 +67,6 @@ def clean_data_json(df):
             raise ValueError(f"Missing categorical column: {col}")
 
 
-    return df
+    X=df
 
+    return X,y
