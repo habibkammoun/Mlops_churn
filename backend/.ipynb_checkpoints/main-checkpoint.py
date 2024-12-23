@@ -18,12 +18,12 @@ import os
 import mlflow.pyfunc
 import pickle
 from fastapi import HTTPException
-
+import xgboost
 
 DagsHub_username = os.getenv("DagsHub_username")
 DagsHub_token=os.getenv("DagsHub_token")
-os.environ['MLFLOW_TRACKING_USERNAME']= "rami4real"
-os.environ["MLFLOW_TRACKING_PASSWORD"] = "69866747ee87f7d38c71043c4419de31e49131e0"
+os.environ['MLFLOW_TRACKING_USERNAME']= "__"
+os.environ["MLFLOW_TRACKING_PASSWORD"] = "__"
 
 
 

@@ -5,8 +5,8 @@ import mlflow
 from treatement import xgboost_model
 from treatement import random_forest_model
 
-os.environ['MLFLOW_TRACKING_USERNAME']= "rami4real"
-os.environ["MLFLOW_TRACKING_PASSWORD"] = "69866747ee87f7d38c71043c4419de31e49131e0"
+os.environ['MLFLOW_TRACKING_USERNAME']= "__"
+os.environ["MLFLOW_TRACKING_PASSWORD"] = "__"
 
 #setup mlflow
 mlflow.set_tracking_uri('https://dagshub.com/rami4real/mymlproject.mlflow') #your mlfow tracking uri
