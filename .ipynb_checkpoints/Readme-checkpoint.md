@@ -142,7 +142,6 @@ This project was collaboratively developed by:
 - **Mohamed Hbib Kammoun**  
 - **Azza Shell**  
 
-Feel free to fork the repository, report issues, or contribute new features by opening pull requests. Your contributions are welcome!
 ## Project by
 <a href="https://github.com/rami4real/Mlops_churn/graphs/contributors">
     <img src="https://contrib.rocks/image?repo=rami4real/Mlops_churn" />
